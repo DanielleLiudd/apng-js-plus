@@ -87,6 +87,58 @@ export default class extends EventEmitter {
         }
     }
 
+    renderRangeFrames(startFrameNum, endFrameNum) {
+        this.stop();
+
+        const apngTotalFrames = this._apng.frames.length
+
+        if (startFrameNum > apngTotalFrames - 1) {
+            throw new Error(`startFrameNum can neither equal nor greater than the apng frames length of ${apngTotalFrames}.`)
+        }
+        if (startFrameNum < 0) {
+            throw new Error(`startFrameNum can not less than 0.`)
+        }
+        if (endFrameNum < startFrameNum) {
+            throw new Error(`endFrameNum can not less than startFrameNum.`)
+        }
+        if (endFrameNum > apngTotalFrames - 1) {
+            throw new Error(`endFrameNum can neither equal nor greater than the apng frames length of ${apngTotalFrames}.`)
+        }
+        this._currentFrameNumber = startFrameNum
+        if (this._currentFrameNumber === this._apng.frames.length - 1) {
+            this._numPlays++;
+            if (this._apng.numPlays !== 0 && this._numPlays >= this._apng.numPlays) {
+                this._ended = true;
+                this._paused = true;
+            }
+        }
+        this.emit('play');
+
+        if (this._ended) {
+            this.stop();
+        }
+        this._paused = false;
+
+        let nextRenderTime = performance.now() + this.currentFrame.delay / this.playbackRate;
+        const tick = now => {
+            if (this._ended || this._paused || this._currentFrameNumber >= endFrameNum + 1) {
+                return;
+            }
+            if (now >= nextRenderTime) {
+                while (now - nextRenderTime >= this._apng.playTime / this.playbackRate) {
+                    nextRenderTime += this._apng.playTime / this.playbackRate;
+                    this._numPlays++;
+                }
+                do {
+                    this.renderNextFrame();
+                    nextRenderTime += this.currentFrame.delay / this.playbackRate;
+                } while (!this._ended && now > nextRenderTime);
+            }
+            requestAnimationFrame(tick);
+        };
+        requestAnimationFrame(tick);
+    }
+
     // playback
 
     get paused() { return this._paused; }

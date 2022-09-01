@@ -1,9 +1,9 @@
 {
-  "name": "apng-js",
-  "version": "1.1.2",
-  "description": "Parse and play animated PNG (APNG)",
-  "homepage": "https://github.com/davidmz/apng-js",
-  "repository": "davidmz/apng-js",
+  "name": "apng-js-plus",
+  "version": "1.0.0",
+  "description": "Parse and play animated PNG (APNG), forked from davidmz/apng-js",
+  "homepage": "https://github.com/jrainlau/apng-js-plus",
+  "repository": "jrainlau/apng-js-plus",
   "main": "lib/index.js",
   "types": "types/library/parser.d.ts",
   "scripts": {
@@ -11,9 +11,9 @@
     "prepublish": "yarn build"
   },
   "author": {
-    "name": "David Mzareulyan",
-    "email": "david@hiero.ru",
-    "url": "https://github.com/davidmz"
+    "name": "JrainLau",
+    "email": "jrainlau@gmail.com",
+    "url": "https://github.com/jrainlau"
   },
   "license": "MIT",
   "devDependencies": {

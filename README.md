@@ -1,4 +1,8 @@
-# apng-js
+# apng-js-plus
+
+Forked from https://github.com/davidmz/apng-js, just add `renderRangeFrames()` method to the `Player` instance.
+
+---
 
 `apng-js` provides functions for parse and render animated PNG's 
 ([APNG](https://en.wikipedia.org/wiki/APNG)).
@@ -99,6 +103,8 @@ class Player {
     
     renderNextFrame()       // move to next frame and render it on context
                             // Use this method to manual, frame by frame, rendering.
+
+    renderRangeFrames(startFrameNum, endFrameNum)    // play frames from a range
 }
 ````
 
